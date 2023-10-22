@@ -10,3 +10,6 @@
   <img src="https://img.shields.io/github/license/localzet-dev/Hackathon-Autumn-2023?label=%D0%9B%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F" alt="Лицензия">
 </a>
 </p>
+
+
+# Проект реализован на базе фреймворка (Triangle)[https://github com/Triangle-org/Web]
