@@ -2,6 +2,7 @@
   <img src="https://cdn.localzet.com/public/media/LocalzetGroup.png" width="400">
 </a></p>
 
+<p align="center">
   <a href="https://github.com/localzet-dev/Hackathon-Autumn-2023">
   <img src="https://img.shields.io/github/commit-activity/t/localzet-dev/Hackathon-Autumn-2023?label=%D0%9A%D0%BE%D0%BC%D0%BC%D0%B8%D1%82%D1%8B" alt="Коммиты">
 </a>
