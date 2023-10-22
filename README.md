@@ -12,4 +12,4 @@
 </p>
 
 
-## Проект реализован на базе фреймворка <b><a href="https://github com/Triangle-org/Web">Triangle Web</a></b>
+## Проект реализован на базе фреймворка <b><a href="https://github.com/Triangle-org/Web">Triangle Web</a></b>
