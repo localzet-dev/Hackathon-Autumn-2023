@@ -415,10 +415,19 @@ function pages_main_events(){
 }
 
 function pages_main_event_view($event_id){
-
+	$user_id = user_id();
 	$sql = 'SELECT * FROM `events_info` WHERE `event_id` = "'.$event_id.'"';
 	$g = database($sql, '', '+');
 	$event_row=mysqli_fetch_array($g);
+
+	$sql = 'SELECT `status` FROM `events_members` WHERE `event_id` = "'.$event_id.'" AND `user_id` = "'.$user_id.'"';
+    $status = database($sql, 'status');
+
+	if ($status == 'true'){
+		$btn = '<a onclick="api_events_user_member()" class="btn btn-sm btn-danger">Отписаться</a>';
+	}else{
+		$btn = '<a onclick="api_events_user_member()" class="btn btn-sm btn-primary">Записаться</a>';
+	}
 
 	$sql = 'SELECT COUNT(*), COUNT(`is_speaker`) FROM `events_members` WHERE `event_id` = "'.$event_id.'"';
 	$g = database($sql, '', $t='+');
@@ -458,6 +467,7 @@ function pages_main_event_view($event_id){
 	<head>
 		<title>'.$event_row[1].'</title>
 	'.page_element_main_html_head().'	
+	<script>window.event_id="'.$event_id.'"</script>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -519,7 +529,7 @@ function pages_main_event_view($event_id){
 
 														'.$speakers.'
 														<!--end::Block-->
-
+														'.$btn.'
 													</div>
 													<!--end::Post content-->
 
@@ -539,6 +549,7 @@ function pages_main_event_view($event_id){
 						</div>
 						<!--end::Content wrapper-->
 	'.page_element_main_html_footer().'
+	<script src="https://hackathon.localzet.com/assets/js/api/events.js"></script>
 					</div>
 					<!--end:::Main-->
 				</div>

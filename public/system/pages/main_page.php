@@ -190,7 +190,7 @@ function page_element_main_html_menu(){
 		</div>
 		';
 	}else{
-		$is_speaker = '';
+		$is_admin = '';
 	}
 
 	$add_menu = '

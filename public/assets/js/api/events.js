@@ -25,3 +25,20 @@ function triger_api_events_get_events_list(){
     clearTimeout(window.timer);
     window.timer = setTimeout(() => api_events_get_events_list(), 1000);
 }
+
+function api_events_user_member(){
+    var form = new FormData();
+    form.append('api', 'api_events_user_member');
+    form.append('event_id', window.event_id);
+    axios.post('https://hackathon.localzet.com/events/api/', form)
+        .then(function (response) {
+            if (response.data['status'] == 'ok'){
+                window.location.reload();
+            }else{
+                api_alert_error_callback();
+            }
+        }).catch(function (error) {
+            console.log(error);
+            api_alert_error_callback();
+        });
+    }

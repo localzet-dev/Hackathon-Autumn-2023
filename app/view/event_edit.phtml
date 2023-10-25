@@ -1,62 +1,10 @@
+<?php $title = $event->title; ?>
 <!DOCTYPE html>
-<html lang="ru">
-<!--begin::Head-->
+
+<html lang="ru" prefix="og: http://ogp.me/ns#">
 
 <head>
-    <base href="" />
-    <title>
-        <?= $event->title ?>
-    </title>
-    <meta charset="utf-8">
-
-    <!-- SEO Meta -->
-    <meta name="language" content="RU" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="title" content="Hackathon Autumn 2023" />
-    <meta name="description"
-        content="Оджетто — Быстро выводим на рынок новые продукты на готовых платформах, развиваем custom build решения в парадигме микросервисов. IT-консалтинг, разработка, дизайн, поддержка, веб-аналитика." />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Apple Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-
-    <!-- About Creator App -->
-    <meta name="owner" content="nona@localzet.com" />
-    <meta name="designer" content="nona@localzet.com" />
-    <meta name="author" content="NONA Team" />
-    <meta name="copyright" content="NONA Team" />
-    <meta name="reply-to" content="nona@localzet.com" />
-
-    <!-- System Information -->
-    <meta name="generator" content="Triangle Framework" />
-
-    <!-- HTTP Equiv -->
-    <meta http-equiv="Expires" content="60" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="no-cache" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- SEO Link -->
-    <link rel="canonical" href="https://hackathon.localzet.com/">
-    <link rel="icon" type="image/png" href="https://oggetto.ru/favicon.png">
-    <link rel="shortcut icon" type="image/png" href="https://oggetto.ru/favicon.png">
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&amp;display=swap">
-
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/plugins/custom/datatables/datatables.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/plugins/global/plugins.bundle.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.bundle.css" />
-
+    <?= include view_path('header.phtml') ?>
     <script>window.event_id = "<?= $event->event_id ?>"</script>
 </head>
 
@@ -99,8 +47,7 @@
                             data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}"
                             data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end"
                             data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true"
-                            data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"
-                            data-kt-swapper-parent="{default: '#kt_app_body',
+                            data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body',
                             lg: '#kt_app_header_wrapper'}">
                             <!--begin::Menu-->
                             <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0"
@@ -110,8 +57,8 @@
                         <div class="app-navbar flex-shrink-0">
                             <div class="app-navbar-item ms-1 ms-md-3" id="kt_header_user_menu_toggle">
                                 <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
-                                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-                                    data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                                    data-kt-menu-placement="bottom-end">
                                     <img src="'.$user_row[5].'" alt="user" />
                                 </div>
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"

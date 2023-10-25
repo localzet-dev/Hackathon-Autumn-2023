@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+
+function landing_page(){
+	
+$file = '<!DOCTYPE html>
 
 <html lang="ru" prefix="og: http://ogp.me/ns#">
 
@@ -61,7 +65,7 @@
 			<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
 				style="background-image: url(assets/media/svg/illustrations/landing.svg)">
 				<div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header"
-					data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+					data-kt-sticky-offset="{default: '."'".'200px'."'".', lg: '."'".'300px'."'".'}">
 					<div class="container">
 						<div class="d-flex align-items-center justify-content-between">
 							<div class="d-flex align-items-center flex-equal">
@@ -191,7 +195,7 @@
 						data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-1.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-1.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Paul Miles</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Development Lead</div>
@@ -199,7 +203,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-2.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-2.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Melisa Marcus</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Creative Director</div>
@@ -207,7 +211,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-5.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-5.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">David Nilson</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Python Expert</div>
@@ -215,7 +219,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-20.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-20.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Anne Clarc</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Project Manager</div>
@@ -223,7 +227,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-23.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-23.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Ricky Hunt</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Art Director</div>
@@ -231,7 +235,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-12.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-12.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Alice Wayde</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">Marketing Manager</div>
@@ -239,7 +243,7 @@
 						</div>
 						<div class="text-center">
 							<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center"
-								style="background-image:url('assets/media/avatars/300-9.jpg')"></div>
+								style="background-image:url('."'".'assets/media/avatars/300-9.jpg'."'".')"></div>
 							<div class="mb-0">
 								<a href="#" class="text-dark fw-bold text-hover-primary fs-3">Carles Puyol</a>
 								<div class="text-muted fs-6 fw-semibold mt-1">QA Managers</div>
@@ -441,6 +445,13 @@
 	<script src="/assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
 	<script src="/assets/js/custom/landing.js"></script>
 	<script src="/assets/js/custom/pages/pricing/general.js"></script>
+	<script src="https://hackathon.localzet.com/assets/js/api/events.js"></script>
+	<script>
+		triger_api_events_get_events_list();
+	</script>
 </body>
 
-</html>
+</html>';
+return $file;
+}
+?>

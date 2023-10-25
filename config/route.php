@@ -96,3 +96,7 @@ Route::any('/edit/{edit_id}', function (Request $request, $edit_id) {
         'user' => User::firstWhere(['user_id' => session('user_id')]),
     ]);
 });
+
+// Route::fallback(function() {
+//     return new Response(200, [], App::execPhpFile(public_path('index.php')));
+// });

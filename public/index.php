@@ -15,7 +15,8 @@ function router()
     }
     if ($url == '') {
         
-        return include_once 'system/pages/landing.php';
+         include_once 'system/pages/landing.php';
+         return landing_page();
     } else {
         if (auth()) {
 
@@ -29,7 +30,7 @@ function router()
                 $url_p = explode('/', $url); //
                 if ($url_p[0] == 'user') {
                     return pages_main_user_profile();
-                } else if ($url_p[0] == 'events') {//
+                } else if ($url_p[0] == 'events') {
                     if ($url_p[1] == '') {
                         return pages_main_events();
                     }else if ($url_p[1] == 'add') {    

@@ -47,8 +47,9 @@ class Guard implements MiddlewareInterface
     public function process(Request $request, callable $handler): Response
     {
         if (
+            !$request->controller ||
             $request->controller == Event::class
-            ) {
+        ) {
             return $handler($request);
         }
 
@@ -56,117 +57,154 @@ class Guard implements MiddlewareInterface
             return response('OK');
         }
 
-        if ($request->method() == 'POST') {
+        // if ($request->method() == 'POST') {
 
-            if (session('user_id') && session('token')) {
-                $tokendata = (array) LWT::decode(
-                    session('token'),
-                    config('lwt.ecdsa.secp256k1.public'),
-                    'ES512',
-                    config('lwt.rsa.4096.private')
-                );
+        //     if (session('user_id') && session('token')) {
+        //         $tokendata = (array) LWT::decode(
+        //             session('token'),
+        //             config('lwt.ecdsa.secp256k1.public'),
+        //             'ES512',
+        //             config('lwt.rsa.4096.private')
+        //         );
 
-                if (!$tokendata || !is_array($tokendata)) {
-                    throw new BusinessException("Отсутствуют данные авторизации");
-                }
-    
-                if (!isset($tokendata['gid']) || !@$tokendata['gid'] || empty($tokendata['gid'])) {
-                    throw new BusinessException("Некорректные данные авторизации");
-                }
-    
-                $user = User::firstWhere(['user_id' => $tokendata['gid']]);
-    
-                if (!$user) {
-                    throw new BusinessException("Недопустимые данные авторизации");
-                }    
+        //         if (!$tokendata || !is_array($tokendata)) {
+        //             throw new BusinessException("Отсутствуют данные авторизации");
+        //         }
 
-                static::session_finally($request);
-            }
+        //         if (!isset($tokendata['gid']) || !@$tokendata['gid'] || empty($tokendata['gid'])) {
+        //             throw new BusinessException("Некорректные данные авторизации");
+        //         }
 
+        //         $user = User::firstWhere(['user_id' => $tokendata['gid']]);
 
-            $token = $request->header('Authorization');
+        //         if (!$user) {
+        //             throw new BusinessException("Недопустимые данные авторизации");
+        //         }    
 
-            if (!$token || !is_string($token)) {
-                throw new BusinessException("Отсутствует заголовок авторизации");
-            }
-
-            $token = explode(' ', $token);
-            $tokendata = null;
-
-            if (!$token[0] || !is_string($token[0])) {
-                throw new BusinessException("Некорректный тип авторизации");
-            }
+        //         static::session_finally($request);
+        //     }
 
 
-            // Authorization: LWT? ***.***.***
-            switch ($token[0]) {
-                case 'SID':
-                    $sid = @$token[1] ?? null;
-                    if (!$sid || !is_string($sid)) {
-                        throw new BusinessException("Некорректный токен авторизации");
-                    }
+        //     $token = $request->header('Authorization');
 
-                    $tokendata = (array) Session::firstWhere(['_id' => $sid]);
+        //     if (!$token || !is_string($token)) {
+        //         throw new BusinessException("Отсутствует заголовок авторизации");
+        //     }
 
-                    if ($tokendata && isset($tokendata['token'])) {
-                        $lwt = $tokendata['token'];
-                    }
+        //     $token = explode(' ', $token);
+        //     $tokendata = null;
 
-                    break;
-                case 'LWT': // (Third-party) Межведомственные запросы
-                    $lwt_client = @$token[1] ?? null;
-                    $lwt = @$token[2] ?? null;
-                    if (!$lwt_client || !is_string($lwt_client)) {
-                        throw new BusinessException("Некорректный клиент авторизации");
-                    }
+        //     if (!$token[0] || !is_string($token[0])) {
+        //         throw new BusinessException("Некорректный тип авторизации");
+        //     }
 
-                    if (!$lwt || !is_string($lwt)) {
-                        throw new BusinessException("Некорректный токен авторизации");
-                    }
 
-                    if (!config("lwt.clients.$lwt_client")) {
-                        throw new BusinessException("Недопустимый клиент авторизации");
-                    }
+        //     // Authorization: LWT? ***.***.***
+        //     switch ($token[0]) {
+        //         case 'SID':
+        //             $sid = @$token[1] ?? null;
+        //             if (!$sid || !is_string($sid)) {
+        //                 throw new BusinessException("Некорректный токен авторизации");
+        //             }
 
-                    $tokendata = (array) LWT::decode(
-                        $lwt,
-                        config("lwt.clients.$lwt_client.ecdsa.public"),
-                        config("lwt.clients.$lwt_client.encryption"),
-                        config("lwt.clients.$lwt_client.rsa.private"),
-                    );
+        //             $tokendata = (array) Session::firstWhere(['_id' => $sid]);
 
-                    break;
-                case 'LWTv2': // (Second-party) Нативные клиенты
-                    $lwt = @$token[1] ?? null;
-                    if (!$lwt || !is_string($lwt)) {
-                        throw new BusinessException("Некорректный токен авторизации");
-                    }
+        //             if ($tokendata && isset($tokendata['token'])) {
+        //                 $lwt = $tokendata['token'];
+        //             }
 
-                    $tokendata = (array) LWT::decode(
-                        $lwt,
-                        config('lwt.ecdsa.secp256k1.public'),
-                        'ES512',
-                    );
+        //             break;
+        //         case 'LWT': // (Third-party) Межведомственные запросы
+        //             $lwt_client = @$token[1] ?? null;
+        //             $lwt = @$token[2] ?? null;
+        //             if (!$lwt_client || !is_string($lwt_client)) {
+        //                 throw new BusinessException("Некорректный клиент авторизации");
+        //             }
 
-                    break;
-                case 'LWTv3': // (First-party) Собственный фронт
-                    $lwt = @$token[1] ?? null;
-                    if (!$lwt || !is_string($lwt)) {
-                        throw new BusinessException("Некорректный токен авторизации");
-                    }
+        //             if (!$lwt || !is_string($lwt)) {
+        //                 throw new BusinessException("Некорректный токен авторизации");
+        //             }
 
-                    $tokendata = (array) LWT::decode(
-                        $lwt,
-                        config('lwt.ecdsa.secp256k1.public'),
-                        'ES512',
-                        config('lwt.rsa.4096.private')
-                    );
+        //             if (!config("lwt.clients.$lwt_client")) {
+        //                 throw new BusinessException("Недопустимый клиент авторизации");
+        //             }
 
-                    break;
-                default:
-                    // Господа, идите на . . .
-                    throw new BusinessException("Недопустимый тип авторизации");
-            }
+        //             $tokendata = (array) LWT::decode(
+        //                 $lwt,
+        //                 config("lwt.clients.$lwt_client.ecdsa.public"),
+        //                 config("lwt.clients.$lwt_client.encryption"),
+        //                 config("lwt.clients.$lwt_client.rsa.private"),
+        //             );
+
+        //             break;
+        //         case 'LWTv2': // (Second-party) Нативные клиенты
+        //             $lwt = @$token[1] ?? null;
+        //             if (!$lwt || !is_string($lwt)) {
+        //                 throw new BusinessException("Некорректный токен авторизации");
+        //             }
+
+        //             $tokendata = (array) LWT::decode(
+        //                 $lwt,
+        //                 config('lwt.ecdsa.secp256k1.public'),
+        //                 'ES512',
+        //             );
+
+        //             break;
+        //         case 'LWTv3': // (First-party) Собственный фронт
+        //             $lwt = @$token[1] ?? null;
+        //             if (!$lwt || !is_string($lwt)) {
+        //                 throw new BusinessException("Некорректный токен авторизации");
+        //             }
+
+        //             $tokendata = (array) LWT::decode(
+        //                 $lwt,
+        //                 config('lwt.ecdsa.secp256k1.public'),
+        //                 'ES512',
+        //                 config('lwt.rsa.4096.private')
+        //             );
+
+        //             break;
+        //         default:
+        //             // Господа, идите на . . .
+        //             throw new BusinessException("Недопустимый тип авторизации");
+        //     }
+
+        //     if (!$tokendata || !is_array($tokendata)) {
+        //         throw new BusinessException("Отсутствуют данные авторизации");
+        //     }
+
+        //     if (!isset($tokendata['gid']) || !@$tokendata['gid'] || empty($tokendata['gid'])) {
+        //         throw new BusinessException("Некорректные данные авторизации");
+        //     }
+
+        //     $user = User::firstWhere(['user_id' => $tokendata['gid']]);
+
+        //     if (!$user) {
+        //         throw new BusinessException("Недопустимые данные авторизации");
+        //     }
+
+        //     $session_token = Session::firstWhere(['token' => $lwt]);
+
+        //     if ($session_token && $session_token->_id) {
+        //         $request->sessionId($session_token->_id);
+
+        //         if ($session_token->user_id && $session_token->user_id != $user->user_id) {
+        //             $session_token->delete();
+        //         }
+        //     }
+
+        //     session(['user_id' => $user->user_id]);
+        //     session(['token' => $lwt]);
+        // }
+
+        // if ($request->method() == 'GET') {
+        if (session('user_id') && session('token')) {
+            $tokendata = (array) LWT::decode(
+                session('token'),
+                config('lwt.ecdsa.secp256k1.public'),
+                'ES512',
+                config('lwt.rsa.4096.private')
+            );
 
             if (!$tokendata || !is_array($tokendata)) {
                 throw new BusinessException("Отсутствуют данные авторизации");
@@ -181,20 +219,11 @@ class Guard implements MiddlewareInterface
             if (!$user) {
                 throw new BusinessException("Недопустимые данные авторизации");
             }
-
-            $session_token = Session::firstWhere(['token' => $lwt]);
-
-            if ($session_token && $session_token->_id) {
-                $request->sessionId($session_token->_id);
-
-                if ($session_token->user_id && $session_token->user_id != $user->user_id) {
-                    $session_token->delete();
-                }
-            }
-
-            session(['user_id' => $user->user_id]);
-            session(['token' => $lwt]);
+        } else {
+            static::session_finally($request);
+            return redirect('https://hackathon.localzet.com/auth.php');
         }
+        // }
 
         static::session_finally($request);
 

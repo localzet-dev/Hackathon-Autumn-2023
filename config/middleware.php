@@ -1,4 +1,5 @@
 <?php
+use app\middleware\Guard;
 
 /**
  * @package     Triangle Web
@@ -8,4 +9,8 @@
  * @license     https://mit-license.org MIT
  */
 
-return [];
+return [
+    '' => [
+        Guard::class
+    ]
+];

@@ -18,6 +18,11 @@ return [
     'type' => 'file', // or redis or redis_cluster
     'handler' => FileSessionHandler::class,
     'config' => [
+        'mongodb' => [
+            'uri' => 'mongodb://gen_user:lvanZ2003@188.225.78.118:27017/?authSource=admin&directConnection=true',
+            'database' => 'HackathonAutumn2023',
+            'collection' => 'Sessions',
+        ],
         'file' => [
             'save_path' => runtime_path() . '/sessions',
         ],
